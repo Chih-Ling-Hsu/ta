@@ -98,8 +98,18 @@ def add_trend_ta(df, high, low, close, fillna=False, colprefix=""):
         pandas.core.frame.DataFrame: Dataframe with new features.
     """
     df['{}trend_macd'.format(colprefix)] = macd(df[close], n_fast=12, n_slow=26, fillna=fillna)
-    df['{}trend_macd_signal'.format(colprefix)] = macd_signal(df[close], n_fast=12, n_slow=26, n_sign=9,
-                                    fillna=fillna)
+    df['{}trend_macd_14_28'.format(colprefix)] = macd(df[close], n_fast=14, n_slow=28, fillna=fillna)
+    df['{}trend_macd_16_30'.format(colprefix)] = macd(df[close], n_fast=16, n_slow=30, fillna=fillna)
+    
+    df['{}trend_macd_signal'.format(colprefix)] = macd_signal(df[close], n_fast=12, n_slow=26, n_sign=9, fillna=fillna)
+    df['{}trend_macd_signal_14_28_10'.format(colprefix)] = macd_signal(df[close], n_fast=14, n_slow=28, n_sign=10, fillna=fillna)
+    df['{}trend_macd_signal_16_30_11'.format(colprefix)] = macd_signal(df[close], n_fast=16, n_slow=30, n_sign=11, fillna=fillna)
+    
+    df['{}trend_sma'.format(colprefix)] = ema_indicator(df[close], n=15, fillna=fillna)
+    df['{}trend_sma_20'.format(colprefix)] = ema_indicator(df[close], n=20, fillna=fillna)
+    df['{}trend_sma_25'.format(colprefix)] = ema_indicator(df[close], n=25, fillna=fillna)
+    df['{}trend_sma_30'.format(colprefix)] = ema_indicator(df[close], n=30, fillna=fillna)
+    
     df['{}trend_macd_diff'.format(colprefix)] = macd_diff(df[close], n_fast=12, n_slow=26, n_sign=9,
                                     fillna=fillna)
     df['{}trend_ema_fast'.format(colprefix)] = ema_indicator(df[close], n=12, fillna=fillna)
@@ -147,13 +157,30 @@ def add_momentum_ta(df, high, low, close, volume, fillna=False, colprefix=""):
         pandas.core.frame.DataFrame: Dataframe with new features.
     """
     df['{}momentum_rsi'.format(colprefix)] = rsi(df[close], n=14, fillna=fillna)
-    df['{}momentum_mfi'.format(colprefix)] = money_flow_index(df[high], df[low], df[close],
-                                        df[volume], n=14, fillna=fillna)
+    df['{}momentum_rsi_15'.format(colprefix)] = rsi(df[close], n=15, fillna=fillna)
+    df['{}momentum_rsi_20'.format(colprefix)] = rsi(df[close], n=20, fillna=fillna)
+    df['{}momentum_rsi_25'.format(colprefix)] = rsi(df[close], n=25, fillna=fillna)
+    df['{}momentum_rsi_30'.format(colprefix)] = rsi(df[close], n=30, fillna=fillna)
+    
+    df['{}momentum_wr'.format(colprefix)] = wr(df[high], df[low], df[close], lbp=14, fillna=fillna)
+    df['{}momentum_wr_18'.format(colprefix)] = wr(df[high], df[low], df[close], lbp=18, fillna=fillna)
+    df['{}momentum_wr_22'.format(colprefix)] = wr(df[high], df[low], df[close], lbp=22, fillna=fillna)
+    
+    df['{}momentum_stoch'.format(colprefix)] = stoch(df[high], df[low], df[close], n=14, fillna=fillna)
+    df['{}momentum_stoch_18'.format(colprefix)] = stoch(df[high], df[low], df[close], n=18, fillna=fillna)
+    df['{}momentum_stoch_22'.format(colprefix)] = stoch(df[high], df[low], df[close], n=22, fillna=fillna)    
+    
+    df['{}momentum_uo'.format(colprefix)] = uo(df[high], df[low], df[close], s=7, m=14, l=28, fillna=fillna)
+    df['{}momentum_uo_8'.format(colprefix)] = uo(df[high], df[low], df[close], s=8, m=16, l=22, fillna=fillna)
+    df['{}momentum_uo_9'.format(colprefix)] = uo(df[high], df[low], df[close], s=9, m=18, l=36, fillna=fillna)
+    
+    df['{}momentum_mfi'.format(colprefix)] = money_flow_index(df[high], df[low], df[close], df[volume], n=14, fillna=fillna)
+    df['{}momentum_mfi_18'.format(colprefix)] = money_flow_index(df[high], df[low], df[close], df[volume], n=18, fillna=fillna)
+    df['{}momentum_mfi_22'.format(colprefix)] = money_flow_index(df[high], df[low], df[close], df[volume], n=22, fillna=fillna)
+    
+    
     df['{}momentum_tsi'.format(colprefix)] = tsi(df[close], r=25, s=13, fillna=fillna)
-    df['{}momentum_uo'.format(colprefix)] = uo(df[high], df[low], df[close], fillna=fillna)
-    df['{}momentum_stoch'.format(colprefix)] = stoch(df[high], df[low], df[close], fillna=fillna)
     df['{}momentum_stoch_signal'.format(colprefix)] = stoch_signal(df[high], df[low], df[close], fillna=fillna)
-    df['{}momentum_wr'.format(colprefix)] = wr(df[high], df[low], df[close], fillna=fillna)
     df['{}momentum_ao'.format(colprefix)] = ao(df[high], df[low], fillna=fillna)
     return df
 

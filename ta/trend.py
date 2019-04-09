@@ -106,6 +106,21 @@ def ema_indicator(close, n=12, fillna=False):
     ema_ = ema(close, n, fillna)
     return pd.Series(ema_, name='ema')
 
+def sma_indicator(close, n=12, fillna=False):
+    """SMA
+
+    Moving Average via Pandas
+
+    Args:
+        close(pandas.Series): dataset 'Close' column.
+        n(int): n period short-term.
+        fillna(bool): if True, fill nan values.
+
+    Returns:
+        pandas.Series: New feature generated.
+    """
+    sma_ = sma(close, n, fillna)
+    return pd.Series(sma_, name='sma')
 
 def adx(high, low, close, n=14, fillna=False):
     """Average Directional Movement Index (ADX)
